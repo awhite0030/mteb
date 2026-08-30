@@ -272,11 +272,12 @@ arctic_embed_l = ModelMeta(
 
 arctic_embed_m_v1_5 = ModelMeta(
     loader=SentenceTransformerEncoderWrapper,
-    loader_kwargs=dict(
-        model_prompts={
+    loader_kwargs={
+        "model_prompts": {
             "query": "Represent this sentence for searching relevant passages: "
         },
-    ),
+        "trust_remote_code": True,
+    },
     name="Snowflake/snowflake-arctic-embed-m-v1.5",
     model_type=["dense"],
     revision="97eab2e17fcb7ccb8bb94d6e547898fa1a6a0f47",
