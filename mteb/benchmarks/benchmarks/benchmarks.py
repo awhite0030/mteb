@@ -1437,7 +1437,6 @@ MTEB_AFRICA = Benchmark(
             "XQuADRetrieval",
             "XM3600T2IRetrieval",
             # Additional classification tasks
-            "AfriSentiLangClassification",
             "MassiveIntentClassification",
             "MassiveScenarioClassification",
             "MultilingualSentimentClassification",
