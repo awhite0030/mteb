@@ -8,8 +8,9 @@ class Ocnli(AbsTaskPairClassification):
         description="Original Chinese Natural Language Inference dataset",
         reference="https://arxiv.org/abs/2010.05444",
         dataset={
-            "path": "C-MTEB/OCNLI",
-            "revision": "66e76a618a34d6d565d5538088562851e6daa7ec",
+            "path": "clue",
+            "name": "ocnli",
+            "revision": "28178267a609dd08bdc703dd6c931dfc2c2f4431",
         },
         type="PairClassification",
         category="t2t",
@@ -41,8 +42,11 @@ class Ocnli(AbsTaskPairClassification):
         self,
         num_proc: int | None = None,
     ):
-        self.dataset = self.dataset.rename_column("sent1", "sentence1")
-        self.dataset = self.dataset.rename_column("sent2", "sentence2")
+        def map_label(example):
+            example["label"] = 1 if example["label"] == 1 else 0
+            return example
+
+        self.dataset = self.dataset.map(map_label, num_proc=num_proc)
 
 
 class Cmnli(AbsTaskPairClassification):
