@@ -3,7 +3,6 @@ from .afri_senti_classification import AfriSentiClassification
 from .afri_senti_lang_classification import AfriSentiLangClassification
 from .amazon_counterfactual_classification import AmazonCounterfactualClassification
 from .amazon_reviews_classification import AmazonReviewsClassification
-from .cameo_emotion_classification import CAMEOEmotionClassification
 from .catalonia_tweet_classification import CataloniaTweetClassification
 from .cyrillic_turkic_lang_classification import CyrillicTurkicLangClassification
 from .hin_dialect_classification import HinDialectClassification
@@ -53,7 +52,6 @@ __all__ = [
     "AfriSentiLangClassification",
     "AmazonCounterfactualClassification",
     "AmazonReviewsClassification",
-    "CAMEOEmotionClassification",
     "CataloniaTweetClassification",
     "CyrillicTurkicLangClassification",
     "HUMEMultilingualSentimentClassification",

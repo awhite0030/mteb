@@ -250,12 +250,6 @@ from .lmeb_retrieval import (
     ReMe,
     ToolBench,
 )
-from .lombard_grid_retrieval import (
-    LombardGridA2VRetrieval,
-    LombardGridV2ARetrieval,
-    LombardGridV2VRetrieval,
-    LombardGridVA2VARetrieval,
-)
 from .lotte_retrieval import LoTTERetrieval
 from .macs import MACSA2TRetrieval, MACST2ARetrieval
 from .mars_vl_pairs import MarsVLPairsI2TRetrieval, MarsVLPairsT2IRetrieval
@@ -720,10 +714,6 @@ __all__ = [
     "LitSearchRetrieval",
     "LoCoMo",
     "LoTTERetrieval",
-    "LombardGridA2VRetrieval",
-    "LombardGridV2ARetrieval",
-    "LombardGridV2VRetrieval",
-    "LombardGridVA2VARetrieval",
     "LongMemEval",
     "LooGLE",
     "MACSA2TRetrieval",
