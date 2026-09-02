@@ -354,6 +354,7 @@ gte_multilingual_base = ModelMeta(
 
 gte_modernbert_base = ModelMeta(
     loader=SentenceTransformerEncoderWrapper,
+    loader_kwargs={"trust_remote_code": True},
     name="Alibaba-NLP/gte-modernbert-base",
     model_type=["dense"],
     languages=["eng-Latn"],
