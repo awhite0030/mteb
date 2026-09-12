@@ -118,6 +118,13 @@ training_data = {
     "MrTidyRetrieval",
     "MIRACLRetrieval",
     "CodeSearchNet",
+    # LongEmbed tasks
+    "LEMBNarrativeQARetrieval",
+    "LEMBNeedleRetrieval",
+    "LEMBPasskeyRetrieval",
+    "LEMBQMSumRetrieval",
+    "LEMBSummScreenFDRetrieval",
+    "LEMBWikimQARetrieval",
 }
 
 
