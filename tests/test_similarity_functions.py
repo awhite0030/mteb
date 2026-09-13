@@ -10,7 +10,6 @@ from __future__ import annotations
 import numpy as np
 import pytest
 import torch
-from packaging.version import Version
 
 from mteb.similarity_functions import (
     cos_sim,
@@ -58,6 +57,7 @@ def test_hps_collapses_spurious_ties(dtype, embeddings):
     scores that full float32 scoring produces.
     """
     from packaging.version import parse
+
     if parse(torch.__version__).base_version <= parse("2.5.0").base_version:
         pytest.xfail('Torch will raise "clamp_min_scalar_cpu" not implemented for Half')
 
