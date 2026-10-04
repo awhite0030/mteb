@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 
+import filelock
 import pytest
 import sentence_transformers
 import sklearn
@@ -53,16 +54,22 @@ logging.basicConfig(level=logging.INFO)
 
 
 def _load_sentence_transformer(name: str) -> SentenceTransformer:
-    model = SentenceTransformer(name)
-    # Prior to https://github.com/embeddings-benchmark/mteb/pull/3079 the
-    # SentenceTransformerWrapper would set the model's prompts to None because
-    # the mock tasks are not in the MTEB task registry. The linked PR changes
-    # this behavior and keeps the prompts as configured by the model, so this
-    # test clears the prompts explicitly to preserve the legacy behavior and
-    # focus the test on the tasks instead of the prompts. Using an empty dict
-    # instead of None avoids a TypeError in SentenceTransformers 5.0.0+.
-    model.prompts = {}
-    return model
+    with filelock.FileLock(f"{name.replace('/', '_')}.lock"):
+        model = SentenceTransformer(name)
+        # Prior to https://github.com/embeddings-benchmark/mteb/pull/3079 the
+        # SentenceTransformerWrapper would set the model's prompts to None because
+        # the mock tasks are not in the MTEB task registry. The linked PR changes
+        # this behavior and keeps the prompts as configured by the model, so this
+        # test clears the prompts explicitly to preserve the legacy behavior and
+        # focus the test on the tasks instead of the prompts. Using an empty dict
+        # instead of None avoids a TypeError in SentenceTransformers 5.0.0+.
+        model.prompts = {}
+        return model
+
+
+def _load_cross_encoder(name: str) -> CrossEncoder:
+    with filelock.FileLock(f"{name.replace('/', '_')}.lock"):
+        return CrossEncoder(name)
 
 
 SENTENCE_TRANSFORMER_MODEL = ModelInfo(
@@ -101,7 +108,7 @@ SENTENCE_TRANSFORMER_MODEL = ModelInfo(
 )
 CROSS_ENCODER_MODEL = ModelInfo(
     name="cross-encoder/ms-marco-TinyBERT-L2-v2",
-    loader=CrossEncoder,
+    loader=_load_cross_encoder,
     expected_scores={
         MockRerankingTask: 0.5,
         MockInstructionReranking: 0.63093,
@@ -130,9 +137,13 @@ if (
 ):
     from sentence_transformers.sparse_encoder import SparseEncoder
 
+    def _load_sparse_encoder(name: str) -> SparseEncoder:
+        with filelock.FileLock(f"{name.replace('/', '_')}.lock"):
+            return SparseEncoder(name)
+
     SPARSE_ENCODER_MODEL = ModelInfo(
         name="sparse-encoder/splade-camembert-base-v2",
-        loader=SparseEncoder,
+        loader=_load_sparse_encoder,
         expected_scores={
             MockMultilingualBitextMiningTask: 0.5,
             MockMultilingualParallelBitextMiningTask: 0.5,
@@ -187,9 +198,10 @@ if (
     from sentence_transformers import MultiVectorEncoder
 
     def _load_multi_vector_encoder(name: str) -> MultiVectorEncoder:
-        return MultiVectorEncoder(
-            name, revision="6bb4488a7a1f1769f7a69fa1ff0c74c6a7b98cbd"
-        )
+        with filelock.FileLock(f"{name.replace('/', '_')}.lock"):
+            return MultiVectorEncoder(
+                name, revision="6bb4488a7a1f1769f7a69fa1ff0c74c6a7b98cbd"
+            )
 
     MULTI_VECTOR_ENCODER_MODEL = ModelInfo(
         name="lightonai/LateOn",
