@@ -59,8 +59,8 @@ CROSS_ENCODER_MODEL = ModelInfo(
 )
 
 # The minimum supported scikit-learn releases produce different deterministic KMeans
-# assignments than 1.8+ for the same fixed embeddings and random state.
-if Version(sklearn.__version__) < Version("1.8.0"):
+# assignments than 1.9+ for the same fixed embeddings and random state.
+if Version(sklearn.__version__) < Version("1.9.0"):
     DENSE_MODEL.expected_scores.update(
         {
             "TwentyNewsgroupsClustering": 0.04560,

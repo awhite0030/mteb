@@ -165,9 +165,9 @@ if (
         },
     )
     # The minimum supported scikit-learn releases produce different deterministic
-    # KMeans assignments than 1.8+ for the same fixed embeddings and random state, see
+    # KMeans assignments than 1.9+ for the same fixed embeddings and random state, see
     # test_integration_with_datasets.py.
-    if Version(sklearn.__version__) < Version("1.8.0"):
+    if Version(sklearn.__version__) < Version("1.9.0"):
         SPARSE_ENCODER_MODEL.expected_scores.update(
             {
                 MockMultilingualClusteringTask: 1.0,
