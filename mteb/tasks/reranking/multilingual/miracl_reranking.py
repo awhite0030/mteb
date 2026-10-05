@@ -46,8 +46,8 @@ class MIRACLReranking(AbsTaskRetrieval):
         description="MIRACL (Multilingual Information Retrieval Across a Continuum of Languages) is a multilingual retrieval dataset that focuses on search across 18 different languages.",
         reference="https://project-miracl.github.io/",
         dataset={
-            "path": "mteb/MIRACLReranking",
-            "revision": "d11a14c74e8bd448cedab0c1d9a720040535f228",
+            "path": "mteb/MIRACLRetrievalHardNegatives",
+            "revision": "d7d94fa4b946cec4a27c84653aa0cf6b33f74a3c",
         },
         type="Reranking",
         category="t2t",
