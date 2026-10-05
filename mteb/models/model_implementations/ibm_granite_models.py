@@ -284,6 +284,7 @@ granite_30m_english = ModelMeta(
 
 granite_125m_english = ModelMeta(
     loader=SentenceTransformerEncoderWrapper,
+    loader_kwargs={"trust_remote_code": True},
     name="ibm-granite/granite-embedding-125m-english",
     model_type=["dense"],
     languages=["eng-Latn"],
