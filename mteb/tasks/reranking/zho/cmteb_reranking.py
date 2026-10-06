@@ -1,5 +1,17 @@
+from __future__ import annotations
+
+import logging
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+
+from mteb._evaluators.retrieval_metrics import max_over_subqueries
 from mteb.abstasks.retrieval import AbsTaskRetrieval
 from mteb.abstasks.task_metadata import TaskMetadata
+
+logger = logging.getLogger(__name__)
 
 
 class T2Reranking(AbsTaskRetrieval):
@@ -16,7 +28,7 @@ class T2Reranking(AbsTaskRetrieval):
         modalities=["text"],
         eval_splits=["dev"],
         eval_langs=["cmn-Hans"],
-        main_score="map_at_1000",
+        main_score="max_over_subqueries_map_at_1000",
         date=("2022-01-01", "2023-12-31"),
         domains=["Web", "Written"],
         task_subtypes=["Question answering"],
@@ -36,6 +48,17 @@ class T2Reranking(AbsTaskRetrieval):
 }
 """,
     )
+
+    def task_specific_scores(  # noqa: PLR6301
+        self,
+        scores: dict[str, dict[str, float]],
+        qrels: dict[str, dict[str, int]],
+        results: dict[str, dict[str, float]],
+        hf_split: str,
+        hf_subset: str,
+    ) -> dict[str, float]:
+        k_values: Sequence[int] = [1, 3, 5, 10, 20, 100, 1000]
+        return max_over_subqueries(qrels, results, k_values)
 
 
 class MMarcoReranking(AbsTaskRetrieval):
