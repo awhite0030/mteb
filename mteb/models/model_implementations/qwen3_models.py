@@ -20,7 +20,7 @@ def instruction_template(
             instruction = next(iter(instruction.values()))  # TODO
         else:
             instruction = instruction[prompt_type]
-    return f"Instruct: {instruction}\nQuery:"
+    return f"Instruct: {instruction}\nQuery: "
 
 
 multilingual_langs = [
